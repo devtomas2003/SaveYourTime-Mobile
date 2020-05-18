@@ -14,7 +14,12 @@ export default function Routes(){
     return(
        <NavigationContainer>
            <Stack.Navigator>
-           {/* <Stack.Screen
+            {/* <Stack.Screen
+                name="SliderOne"
+                component={Sliders}
+                options={{headerShown: false}}
+            /> */}
+            <Stack.Screen
                 name="Regiao"
                 component={Region}
                 options={{
@@ -25,11 +30,6 @@ export default function Routes(){
                        </TouchableHighlight>
                     ),
                   }}
-            /> */}
-            <Stack.Screen
-                name="SliderOne"
-                component={Sliders}
-                options={{headerShown: false}}
             />
            </Stack.Navigator>
        </NavigationContainer> 
