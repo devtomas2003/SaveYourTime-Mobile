@@ -13,7 +13,7 @@ const Stack = createStackNavigator();
 export default function Routes(){
     useEffect(() => {
         BackHandler.addEventListener('hardwareBackPress', function(){
-            return true;
+            return false;
         });
     }, []);
     return(

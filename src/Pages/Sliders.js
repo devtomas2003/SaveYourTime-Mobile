@@ -1,15 +1,57 @@
 import React, { useEffect } from 'react';
-import { View, Text, StyleSheet, AsyncStorage } from 'react-native';
+import { View, Text, StyleSheet, PermissionsAndroid } from 'react-native';
 import AppIntroSlider from 'react-native-app-intro-slider';
+import AsyncStorage from '@react-native-community/async-storage';
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
-import { faClock, faTicketAlt, faUser, faMapMarkedAlt, faArrowDown } from '@fortawesome/free-solid-svg-icons';
+import { faClock, faTicketAlt, faUser, faMapMarkedAlt, faFlagCheckered, faArrowDown } from '@fortawesome/free-solid-svg-icons';
 import { TouchableHighlight } from 'react-native-gesture-handler';
  
 var go = null;
 
+const requestGPSPermission = async () => {
+  try {
+    const granted = await PermissionsAndroid.request(
+      PermissionsAndroid.PERMISSIONS.ACCESS_COARSE_LOCATION,
+      {
+        title: "SaveYourTime - Permissões",
+        message: "Para mostrar-mos os estabelecimentos perto de si com o sistema do SaveYourTime, pedimos acesso a sua localização.",
+        buttonNeutral: "Perguntar-me depois",
+        buttonNegative: "Cancelar",
+        buttonPositive: "OK"
+      }
+    );
+    if (granted === PermissionsAndroid.RESULTS.GRANTED) {
+      requestGPSNetPermission();
+    }
+  } catch (err) {
+    alert(err);
+  }
+};
+
+const requestGPSNetPermission = async () => {
+  try {
+    const granted = await PermissionsAndroid.request(
+      PermissionsAndroid.PERMISSIONS.ACCESS_FINE_LOCATION,
+      {
+        title: "SaveYourTime - Permissões",
+        message: "Para mostrar-mos os estabelecimentos perto de si com o sistema do SaveYourTime, pedimos acesso a sua localização.",
+        buttonNeutral: "Perguntar-me depois",
+        buttonNegative: "Cancelar",
+        buttonPositive: "OK"
+      }
+    );
+    if (granted === PermissionsAndroid.RESULTS.GRANTED) {
+      AsyncStorage.setItem("tutorial", "1");
+      go.navigate("Regiao");
+    }
+  } catch (err) {
+    alert(err);
+  }
+};
+
 const slides = [
   {
-    key: 1,
+    key: "1",
     title: 'Cansado das Filas?',
     subtitle: 'Nunca mais espere 1 minuto com a APP',
     subtitleTwo: '#SaveYourTime',
@@ -18,7 +60,7 @@ const slides = [
     background: '#4082ee',
   },
   {
-    key: 2,
+    key: "2",
     title: 'Como funciona?',
     subtitle: 'Tire uma senha virtualmente e espere no carro, ou até mesmo em casa!',
     subtitleTwo: '#StayAtHome',
@@ -27,7 +69,16 @@ const slides = [
     background: '#fbbc05',
   },
   {
-    key: 3,
+    key: "3",
+    title: 'Seja notificado!',
+    subtitle: 'Receba uma notificação push quando fila já estiver pequena!',
+    subtitleTwo: 'Sem qualquer custo!',
+    haveBtn: false,
+    icon: faFlagCheckered,
+    background: '#e6189e',
+  },
+  {
+    key: "4",
     title: 'Veja em tempo real!',
     subtitle: 'Quantas pessoas estão a espera para entrar no estabelecimento?',
     subtitleTwo: 'Simples, facil e rapido!',
@@ -36,7 +87,7 @@ const slides = [
     background: '#ea4335',
   },
   {
-    key: 4,
+    key: "5",
     title: 'Nos ajudamos a pesquisar!',
     subtitle: 'Nós mostramos numa lista todos os estabelecimentos que aderiram ao SaveYourTime.',
     subtitleTwo: 'Para isto precisamos da permissão de acesso ao GPS',
@@ -52,8 +103,8 @@ const slides = [
 export default function Sliders({ navigation }) {
   go = navigation;
   useEffect(() => {
-    AsyncStorage.getItem("toturial").then(toturial => {
-        if(toturial){
+    AsyncStorage.getItem("tutorial").then(tutorial => {
+        if(tutorial){
           navigation.navigate("Regiao");
         }
     });
@@ -70,19 +121,14 @@ function renderItem({item}){
         <FontAwesomeIcon size={180} style={styles.wellIcon} icon={ item.icon } />
         <Text style={styles.subtitleSlider}>{item.subtitle}</Text>
         { item.haveBtn ? <Text style={styles.subtitleTwoBtn}>{item.subtitleTwo}</Text> : <Text style={styles.titleSlider}>{item.subtitleTwo}</Text> }
-        { item.haveBtn ? <TouchableHighlight onPress={requestPermission} style={styles.btnGPS}><Text style={styles.btnText}>{item.btnText}</Text></TouchableHighlight> : null }
+        { item.haveBtn ? <TouchableHighlight onPress={requestGPSPermission} style={styles.btnGPS}><Text style={styles.btnText}>{item.btnText}</Text></TouchableHighlight> : null }
         { item.endSlide ? <TouchableHighlight onPress={skipPermission} style={styles.btnClose}><Text style={styles.btnText}>{item.btnNoPermission}</Text></TouchableHighlight> : null }
       </View>
     );
 }
 
-function requestPermission() {
-  AsyncStorage.setItem("toturial", "1");
-  go.navigate("Regiao");
-}
-
 function skipPermission() {
-  AsyncStorage.setItem("toturial", "1");
+  AsyncStorage.setItem("tutorial", "1");
   go.navigate("Regiao");
 }
 
