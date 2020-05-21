@@ -33,10 +33,10 @@ export default function Routes(){
                     headerRight: () => (
                         <View style={styles.btnsBar}>
                             <TouchableHighlight style={styles.btnConfig}>
-                                <FontAwesomeIcon size={30} style={styles.configIcon} icon={ faScroll } />
+                                <FontAwesomeIcon size={25} style={styles.configIcon} icon={ faScroll } />
                             </TouchableHighlight>
                             <TouchableHighlight style={styles.btnNoti}>
-                                    <FontAwesomeIcon size={30} style={styles.notiIcon} icon={ faCog } />
+                                    <FontAwesomeIcon size={25} style={styles.notiIcon} icon={ faCog } />
                             </TouchableHighlight>
                        </View>
                     ),
@@ -60,9 +60,9 @@ const styles = StyleSheet.create({
         marginRight: 10
     },
     notiIcon:{
-        color: '#000'
+        color: '#aaa'
     },
     configIcon: {
-        color: '#000'
+        color: '#aaa'
     }
 });
