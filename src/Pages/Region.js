@@ -73,7 +73,7 @@ const data = [
         storeName: 'MEO - Tondela',
         storePeWait: 'Pessoas a espera: 7',
         storeWaitTime: 'Tempo medio de espera: 30 minutos',
-        isLast: false
+        isLast: true
     }
 ];
 
@@ -81,7 +81,7 @@ export default function Region(){
     return(
         <View style={style.mainBox}>
             <View style={style.searchBox}>
-                <TextInput style={style.searchInput} placeholder="Pesquise um estabelecimento" maxLength={20} />
+                <TextInput style={style.searchInput} placeholder="Pesquise um estabelecimento" />
                 <FontAwesomeIcon size={22} style={style.searchImg} icon={ faSearch } />
             </View>
             <FlatList
@@ -164,6 +164,7 @@ const style = StyleSheet.create({
         width: '97%',
         borderColor: '#CCC',
         borderWidth: 1,
+        paddingRight: 50,
         marginTop: 5,
         borderRadius: 5,
         padding: 10
