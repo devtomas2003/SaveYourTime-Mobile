@@ -1,9 +1,9 @@
 import React, { useEffect } from 'react';
-import { TouchableHighlight, StyleSheet, BackHandler } from 'react-native';
+import { TouchableHighlight, StyleSheet, BackHandler, View } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
-import { faCog } from '@fortawesome/free-solid-svg-icons';
+import { faCog, faScroll } from '@fortawesome/free-solid-svg-icons';
 
 import Region from './Pages/Region';
 import Sliders from './Pages/Sliders';
@@ -31,9 +31,14 @@ export default function Routes(){
                     headerTitle: "#SaveYourTime",
                     headerLeft: null,
                     headerRight: () => (
-                       <TouchableHighlight style={styles.btnConfig}>
-                            <FontAwesomeIcon size={25} style={styles.configIcon} icon={ faCog } />
-                       </TouchableHighlight>
+                        <View style={styles.btnsBar}>
+                            <TouchableHighlight style={styles.btnConfig}>
+                                <FontAwesomeIcon size={30} style={styles.configIcon} icon={ faScroll } />
+                            </TouchableHighlight>
+                            <TouchableHighlight style={styles.btnNoti}>
+                                    <FontAwesomeIcon size={30} style={styles.notiIcon} icon={ faCog } />
+                            </TouchableHighlight>
+                       </View>
                     ),
                   }}
             />
@@ -44,9 +49,20 @@ export default function Routes(){
 
 const styles = StyleSheet.create({
     btnConfig: {
+        marginRight: 15
+    },
+    btnsBar:{
+        flex: 1,
+        alignItems: 'center',
+        flexDirection: 'row'
+    },
+    btnNoti:{
         marginRight: 10
     },
+    notiIcon:{
+        color: '#000'
+    },
     configIcon: {
-        color: '#4082ee'
+        color: '#000'
     }
 });
